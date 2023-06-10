@@ -41,6 +41,7 @@ dependencies:
   path_provider: ^2.0.15
   crypt: ^4.3.0
   mailer: ^6.0.1
+  flutter_svg: ^2.0.5
 
 dev_dependencies:
   flutter_test:
