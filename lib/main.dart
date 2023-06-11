@@ -11,9 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Justificaciones App',
-      routes: {
-        'home':(context) => const HomePage()
-      },
+      routes: {'home': (context) => const HomePage()},
       initialRoute: 'home',
     );
   }
