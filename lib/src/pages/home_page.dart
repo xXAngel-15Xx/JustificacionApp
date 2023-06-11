@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: const Center(
-        child: Text('Pruba de cambios con git'),
+        child: Text('Pruba de cambios con git con consola'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
