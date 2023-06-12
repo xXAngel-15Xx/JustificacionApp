@@ -54,6 +54,7 @@ class LoginPage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     // Lógica para el botón "Iniciar Sesión"
+                    Navigator.pushNamed(context, 'home');
                   },
                   style: btnPurple(),
                   child: const Text('Iniciar Sesión'),

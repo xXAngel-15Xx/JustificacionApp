@@ -3,6 +3,7 @@ import 'package:justificacion_app/src/pages/forget_password_page.dart';
 import 'package:justificacion_app/src/pages/formu_page.dart';
 import 'package:justificacion_app/src/pages/home_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:justificacion_app/src/pages/justificaciones_page.dart';
 import 'package:justificacion_app/src/pages/login_page.dart';
 import 'package:justificacion_app/src/pages/register_page.dart';
 import 'package:justificacion_app/src/provider/ui_provider.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Justificaciones App',
       routes: {
-        'home'            : (context) => const HomePage(),
+        'home'            : (context) => const JustificacionesPage(),
         'login'           : (context) => const LoginPage(),
         'register'        : (context) => const RegisterPage(),
         'forget-password' : (context) => const ForgetPasswordPage(),
