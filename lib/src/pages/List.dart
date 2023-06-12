@@ -41,14 +41,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 40.0,
                   ),
                   Text(
-                    'Crear Cuenta',
+                    'Crear Nueva Cuenta',
                     style: hedding1(),
                   ),
                   const SizedBox(
                     height: 10.0,
                   ),
                   Text(
-                    'Elige tu tipo de usuario',
+                    'Eliga el tipo de usuario',
                     style: textGraySmall(),
                   ),
                   const SizedBox(
@@ -59,14 +59,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20.0,
                   ),
                   Text(
-                    'Datos personales',
+                    'Datos personales del alumno',
                     style: textGraySmall(),
                   ),
                   const SizedBox(
                     height: 20.0,
                   ),
                   TextFormField(
-                    decoration: inputWithBorder('Nombres'),
+                    decoration: inputWithBorder('Nombre(s)'),
                   ),
                   const SizedBox(
                     height: 20.0,
@@ -85,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   if (uiProvider.isVisibleInpustRegister)
                     TextFormField(
-                      decoration: inputWithBorder('Número de control'),
+                      decoration: inputWithBorder('Número de control Escolar'),
                     ),
                   if (uiProvider.isVisibleInpustRegister)
                     const SizedBox(
@@ -93,7 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   if (uiProvider.isVisibleInpustRegister)
                     TextFormField(
-                      decoration: inputWithBorder('Carrera'),
+                      decoration: inputWithBorder('Carrera Profesional'),
                     ),
                   if (uiProvider.isVisibleInpustRegister)
                     const SizedBox(
