@@ -12,6 +12,7 @@ class _FormPageState extends State<FormPage> {
   String _inicio = "";
   String _fin = "";
   String _motivo = "";
+  String _grupo = "";
   String _seleccion = "Opcion 1";
 
   List _docentes = ['Opcion 1', 'Opcion 2', 'Opcion 3', 'Opcion 4', 'Opcion 5'];
@@ -52,6 +53,8 @@ class _FormPageState extends State<FormPage> {
             Divider(),
             _crearMotivo(context),
             Divider(),
+            _crearGrupo(context),
+            Divider(),
             _crearLista(),
             SizedBox(height: 16.0),
             _crearBoton(context),
@@ -74,7 +77,7 @@ class _FormPageState extends State<FormPage> {
       ),
       onChanged: (valor) {
         setState(() {
-          _nombre = valor;
+          _numero = valor;
         });
       },
     );
@@ -182,7 +185,24 @@ class _FormPageState extends State<FormPage> {
       ),
       onChanged: (valor) {
         setState(() {
-          _nombre = valor;
+          _motivo = valor;
+        });
+      },
+    );
+  }
+
+  Widget _crearGrupo(BuildContext context) {
+    return TextField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        hintText: "Grupo",
+        labelText: "Grupo",
+      ),
+      onChanged: (valor) {
+        setState(() {
+          _grupo = valor;
         });
       },
     );
