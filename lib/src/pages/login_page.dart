@@ -58,6 +58,18 @@ class LoginPage extends StatelessWidget {
                   style: btnPurple(),
                   child: const Text('Iniciar Sesión'),
                 ),
+                const SizedBox(height: 100.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('¿No tienes cuenta?'),
+                    const SizedBox(width: 10.0,),
+                    GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, 'register'),
+                      child: const Text('Crear Cuenta', style: TextStyle(color: Colors.blue),),
+                    )
+                  ],
+                )
               ],
             ),
           ),

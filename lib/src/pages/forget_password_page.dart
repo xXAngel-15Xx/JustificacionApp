@@ -7,12 +7,18 @@ class ForgetPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: white,
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      backgroundColor: white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/logo.jpg',
+              'assets/images/logo.jpg',
               width: 279,
             ),
             const SizedBox(height: 20),
@@ -88,7 +94,7 @@ class ForgetPasswordPage extends StatelessWidget {
                   style: TextStyle(color: Colors.black),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.pushNamed(context, 'register'),
                   child: const Text(
                     'Crear Cuenta',
                     style: TextStyle(
