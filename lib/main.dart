@@ -5,8 +5,17 @@ import 'package:justificacion_app/src/pages/home_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:justificacion_app/src/pages/login_page.dart';
 import 'package:justificacion_app/src/pages/register_page.dart';
+import 'package:justificacion_app/src/provider/ui_provider.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+  MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: ( _ ) => UIProvider() )
+    ],
+    child: const MyApp(),
+  )
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

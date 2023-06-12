@@ -24,11 +24,11 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 20.0,),
                 Text('Iniciar Sesión', style: hedding1(),),
                 const SizedBox(height: 40.0,),
-                TextField(
-                  decoration: inputWithBorder('Correo Electronico', iconData: Icons.email)
+                TextFormField(
+                  decoration: inputWithBorder('Correo Electronico', iconData: Icons.email),
                 ),
                 const SizedBox(height: 20),
-                TextField(
+                TextFormField(
                   decoration: inputWithBorder('Contraseña', iconData: Icons.lock),
                 ),
                 const SizedBox(height: 20),
