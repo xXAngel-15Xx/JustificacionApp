@@ -6,13 +6,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:justificacion_app/src/pages/justificaciones_page.dart';
 import 'package:justificacion_app/src/pages/login_page.dart';
 import 'package:justificacion_app/src/pages/register_page.dart';
+import 'package:justificacion_app/src/provider/register_form_provider.dart';
 import 'package:justificacion_app/src/provider/ui_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
   MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: ( _ ) => UIProvider() )
+      ChangeNotifierProvider(create: ( _ ) => UIProvider() ),
+      ChangeNotifierProvider(create: ( _ ) => RegisterFormProvider() ),
     ],
     child: const MyApp(),
   )
