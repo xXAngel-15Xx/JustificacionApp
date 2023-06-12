@@ -1,21 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:justificacion_app/src/styles/styles.dart';
 
-class CambiarContrasena extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Recuperar Contraseña',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: CambiarContrasenaPage(),
-    );
-  }
-}
+class ForgetPasswordPage extends StatelessWidget {
+  const ForgetPasswordPage({super.key});
 
-class CambiarContrasenaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,22 +41,15 @@ class CambiarContrasenaPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Container(
-              width: 250,
-              child: const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Correo electrónico',
-                  border: OutlineInputBorder(),
-                ),
+            SizedBox(
+              width: 300,
+              child: TextField(
+                decoration: inputWithBorder('Correo Electrónico', iconData: Icons.email),
               ),
             ),
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 62, 0, 133),
-                padding: EdgeInsets.symmetric(horizontal: 105, vertical: 10),
-              ),
               child: const Text(
                 'Enviar',
                 style: TextStyle(color: Colors.white),
@@ -83,7 +64,9 @@ class CambiarContrasenaPage extends StatelessWidget {
                   style: TextStyle(color: Colors.black),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'login');
+                  },
                   child: const Text(
                     'Iniciar sesión',
                     style: TextStyle(
