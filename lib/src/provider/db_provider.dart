@@ -28,13 +28,11 @@ class DBProvider {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, 'justificaciones.db');
 
-    return await openDatabase(
-      path, 
-      version: 1,
-      onCreate: (Database db, int version) async {
-        await db.execute('PRAGMA foreign_keys = ON;');
+    return await openDatabase(path, version: 1,
+        onCreate: (Database db, int version) async {
+      await db.execute('PRAGMA foreign_keys = ON;');
 
-        await db.execute('''
+      await db.execute('''
           CREATE TABLE $_gruposTable(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre TEXT
