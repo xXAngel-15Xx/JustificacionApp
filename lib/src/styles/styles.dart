@@ -16,6 +16,13 @@ TextStyle hedding1() {
   );
 }
 
+TextStyle textGraySmall() {
+  return const TextStyle(
+    color: gray,
+    fontSize: 12.0
+  );
+}
+
 // Inputs
 InputDecoration inputWithBorder(String textLabel, {IconData? iconData}) {
   return InputDecoration(

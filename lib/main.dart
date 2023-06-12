@@ -3,9 +3,20 @@ import 'package:justificacion_app/src/pages/forget_password_page.dart';
 import 'package:justificacion_app/src/pages/formu_page.dart';
 import 'package:justificacion_app/src/pages/home_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:justificacion_app/src/pages/justificaciones_page.dart';
 import 'package:justificacion_app/src/pages/login_page.dart';
+import 'package:justificacion_app/src/pages/register_page.dart';
+import 'package:justificacion_app/src/provider/ui_provider.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+  MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: ( _ ) => UIProvider() )
+    ],
+    child: const MyApp(),
+  )
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -27,10 +38,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Justificaciones App',
       routes: {
-        'home': (context) => const HomePage(),
-        'login' : (context) => const LoginPage(),
-        'forget-password': (context) => const ForgetPasswordPage(),
-        'form': (context) => FormPage(),
+        'home'            : (context) => const JustificacionesPage(),
+        'login'           : (context) => const LoginPage(),
+        'register'        : (context) => const RegisterPage(),
+        'forget-password' : (context) => const ForgetPasswordPage(),
+        'form'            : (context) => FormPage(),
       },
       initialRoute: 'login',
     );
