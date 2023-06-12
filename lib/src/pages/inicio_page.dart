@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.network(
-              'https://cdn-icons-png.flaticon.com/512/5087/5087579.png', // URL de la imagen
+              'https://cdn-icons-png.flaticon.com/512/5087/5087579.png',
               height: 200,
               width: 200,
             ),
@@ -34,7 +34,6 @@ class LoginPage extends StatelessWidget {
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                // Lógica para el texto "¿Olvidaste tu contraseña?"
               },
               child: Text(
                 '¿Olvidaste tu contraseña?',
@@ -47,12 +46,11 @@ class LoginPage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Lógica para el botón "Iniciar Sesión"
               },
               child: Text('Iniciar Sesión'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.green, // Cambiar el color de fondo del botón
-                onPrimary: Colors.white, // Cambiar el color del texto del botón
+                primary: Colors.green, 
+                onPrimary: Colors.white, 
               ),
             ),
           ],
