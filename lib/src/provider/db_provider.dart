@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:justificacion_app/src/models/grupo_model.dart';
+import 'package:justificacion_app/src/models/user_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -28,7 +29,7 @@ class DBProvider {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, 'justificaciones.db');
 
-    return await openDatabase(path, version: 1,
+    return await openDatabase(path, version: 2,
         onCreate: (Database db, int version) async {
       await db.execute('PRAGMA foreign_keys = ON;');
 
@@ -40,7 +41,7 @@ class DBProvider {
           
           CREATE TABLE $_usuariosTable(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT,
+            nombres TEXT,
             apellido_materno TEXT,
             apellido_paterno TEXT,
             email TEXT,
@@ -82,4 +83,17 @@ class DBProvider {
 
     return res;
   }
+
+  Future<int> nuevoUser(UserModel user) async {
+    final db = await database;
+    
+    final userMap = user.toJson();
+    userMap.remove('id');
+
+    final res = await db!.insert(_usuariosTable, userMap);
+
+    return res;
+  }
+
+
 }
