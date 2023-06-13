@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:justificacion_app/src/provider/ui_provider.dart';
 import 'package:justificacion_app/src/widgets/radio_user.dart';
 import 'package:provider/provider.dart';
-
 import '../styles/styles.dart';
 
 class RegisterPage extends StatefulWidget {
