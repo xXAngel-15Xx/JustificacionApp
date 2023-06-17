@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:justificacion_app/src/models/user_model.dart';
+
+enum TypeUser { alumno,  profesor, administrador }
 
 class RegisterFormProvider extends ChangeNotifier {
   GlobalKey<FormState> formKey =
    GlobalKey<FormState>();
 
-  UserModel user = UserModel(
-    id: 0,
-    apellidoMaterno: '',
-    apellidoPaterno: '',
-    email: '',
-    nombres: '',
-    password: '',
-    role: ''
-  );
+  Map<String, String> user = {
+    'nombre'           : '',
+    'apellido_paterno' : '',
+    'apellido_materno' : '',
+    'email'            : '',
+    'numero_control'   : ''
+  };
+
+  int grupoIdSeleccionado = 0;
+
+  List<int> gruposIdsSeleccionados = [];
+
+  TypeUser userSelected = TypeUser.alumno;
 
   bool isValidForm() {
     return formKey.currentState?.validate() ?? false;
-  }
-
-  void sumitForm() {
-    
   }
 }

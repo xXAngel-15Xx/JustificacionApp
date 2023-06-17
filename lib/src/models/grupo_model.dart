@@ -1,24 +1,45 @@
+import 'package:justificacion_app/src/models/user_model.dart';
 
-class GrupoModel {
-  int id;
-  String nombre;
+class GruposModel {
+    int id;
+    String nombre;
+    String semestre;
+    String carrera;
+    String aula;
+    DateTime createdAt;
+    DateTime updatedAt;
+    UserModel? users;
 
-  GrupoModel({
-   required this.id,
-   required this.nombre 
-  });
+    GruposModel({
+        required this.id,
+        required this.nombre,
+        required this.semestre,
+        required this.carrera,
+        required this.aula,
+        required this.createdAt,
+        required this.updatedAt,
+        this.users,
+    });
 
-  factory GrupoModel.fromJson(Map<String, dynamic> json) => GrupoModel(
-    id: json['id'],
-    nombre: json['nombre']
-  );
+    factory GruposModel.fromJson(Map<String, dynamic> json) => GruposModel(
+        id: json["id"],
+        nombre: json["nombre"],
+        semestre: json["semestre"],
+        carrera: json["carrera"],
+        aula: json["aula"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        users: json['users'] == null ? null : UserModel.fromJson(json['users'])
+    );
 
-  Map<String, dynamic> toJson() => {
-    'id'    : id,
-    'nombre': nombre
-  };
-
-  Map<String, dynamic> tpJsonCreate() => {
-    'nombre': nombre
-  };
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "nombre": nombre,
+        "semestre": semestre,
+        "carrera": carrera,
+        "aula": aula,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "users": users?.toJson()
+    };
 }

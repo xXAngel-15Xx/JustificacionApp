@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:justificacion_app/src/models/grupo_model.dart';
 import 'package:justificacion_app/src/provider/register_form_provider.dart';
-import 'package:justificacion_app/src/provider/ui_provider.dart';
+import 'package:justificacion_app/src/services/grupos_service.dart';
 import 'package:justificacion_app/src/widgets/radio_user.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +19,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final uiProvider = Provider.of<UIProvider>(context);
     final registerFormProvider = Provider.of<RegisterFormProvider>(context);
+    final gruposService = Provider.of<GruposService>(context);
 
     final user = registerFormProvider.user;
 
@@ -83,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                   const SizedBox(height: 20.0,),
-                  if(uiProvider.isVisibleInpustRegister)
+                  if(registerFormProvider.userSelected == TypeUser.alumno)
                   TextFormField(
                     decoration: inputWithBorder('Número de control'),
                     onChanged: ( value ) => user['numero_control'] = value,
@@ -93,6 +94,18 @@ class _RegisterPageState extends State<RegisterPage> {
                       }
                       return null;
                     },
+                  ),
+                  if(registerFormProvider.userSelected == TypeUser.alumno)
+                  const SizedBox(height: 20.0,),
+                  if(registerFormProvider.userSelected == TypeUser.alumno)
+                  DropdownButtonFormField(
+                    items: gruposService.grupos.map<DropdownMenuItem<int>>((e) => DropdownMenuItem(
+                      value: e.id,
+                      child: Text(e.nombre),
+                    )).toList(),
+                    onChanged: (value) {
+                      gruposService.changeGrupoSelected(value);
+                    }
                   ),
                   const SizedBox(height: 20.0,),
                   ElevatedButton(
