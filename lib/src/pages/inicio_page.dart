@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  bool _isEmailValid = true;
+  bool _isPasswordValid = true;
+
+  void _validateInputs() {
+    setState(() {
+      _isEmailValid = _emailController.text.isNotEmpty;
+      _isPasswordValid = _passwordController.text.isNotEmpty;
+    });
+
+    if (_isEmailValid && _isPasswordValid) {
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,15 +40,19 @@ class LoginPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             TextField(
+              controller: _emailController,
               decoration: InputDecoration(
                 labelText: 'Correo Electrónico',
+                errorText: _isEmailValid ? null : 'Campo obligatorio',
               ),
             ),
             SizedBox(height: 10),
             TextField(
+              controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Contraseña',
+                errorText: _isPasswordValid ? null : 'Campo obligatorio',
               ),
             ),
             SizedBox(height: 20),
@@ -45,12 +69,11 @@ class LoginPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-              },
+              onPressed: _validateInputs,
               child: Text('Iniciar Sesión'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.green, 
-                onPrimary: Colors.white, 
+                primary: Colors.green,
+                onPrimary: Colors.white,
               ),
             ),
           ],

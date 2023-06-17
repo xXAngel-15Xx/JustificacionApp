@@ -12,6 +12,7 @@ class JustificacionesPage extends StatelessWidget {
     super.key,
   });
 
+
   @override
   Widget build(BuildContext context){
     final cuentasService = Provider.of<CuentasService>(context);

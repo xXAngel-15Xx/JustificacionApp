@@ -13,7 +13,7 @@ class ForgetPasswordPage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       backgroundColor: white,
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -50,7 +50,8 @@ class ForgetPasswordPage extends StatelessWidget {
             SizedBox(
               width: 300,
               child: TextField(
-                decoration: inputWithBorder('Correo Electrónico', iconData: Icons.email),
+                decoration: inputWithBorder('Correo Electrónico',
+                    iconData: Icons.email),
               ),
             ),
             const SizedBox(height: 10),

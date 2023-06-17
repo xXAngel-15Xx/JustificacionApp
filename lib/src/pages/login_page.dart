@@ -156,6 +156,25 @@ class _LoginPageState extends State<LoginPage> {
                     style: btnPurple(),
                     child: const Text('Iniciar Sesión'),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        '¿No Tienes Cuenta?',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      TextButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, 'register'),
+                        child: const Text(
+                          'Crear Cuenta',
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
