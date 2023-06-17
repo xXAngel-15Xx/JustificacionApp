@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:justificacion_app/src/pages/forget_password_page.dart';
 import 'package:justificacion_app/src/pages/formu_page.dart';
+import 'package:justificacion_app/src/pages/grupos_page.dart';
 import 'package:justificacion_app/src/pages/home_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:justificacion_app/src/pages/justificaciones_page.dart';
@@ -8,6 +9,9 @@ import 'package:justificacion_app/src/pages/login_page.dart';
 import 'package:justificacion_app/src/pages/register_page.dart';
 import 'package:justificacion_app/src/provider/register_form_provider.dart';
 import 'package:justificacion_app/src/provider/ui_provider.dart';
+import 'package:justificacion_app/src/provider/user_data_provider.dart';
+import 'package:justificacion_app/src/services/cuentas_service.dart';
+import 'package:justificacion_app/src/services/justificaciones_service.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
@@ -15,6 +19,9 @@ void main() => runApp(
     providers: [
       ChangeNotifierProvider(create: ( _ ) => UIProvider() ),
       ChangeNotifierProvider(create: ( _ ) => RegisterFormProvider() ),
+      ChangeNotifierProvider(create: ( _ ) => CuentasService(),),
+      ChangeNotifierProvider(create: ( _ ) => UserDataProvider()),
+      ChangeNotifierProvider(create: ( _ ) => JustificacionesService()),
     ],
     child: const MyApp(),
   )
@@ -41,6 +48,7 @@ class MyApp extends StatelessWidget {
       title: 'Justificaciones App',
       routes: {
         'home'            : (context) => const JustificacionesPage(),
+        'grupos'          : (context) => const GruposPage(),
         'login'           : (context) => const LoginPage(),
         'register'        : (context) => const RegisterPage(),
         'forget-password' : (context) => const ForgetPasswordPage(),

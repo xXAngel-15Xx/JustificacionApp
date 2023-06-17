@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:justificacion_app/src/models/grupo_model.dart';
-import 'package:justificacion_app/src/models/user_model.dart';
+import 'package:justificacion_app/src/models/storage_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,11 +8,6 @@ import 'package:path_provider/path_provider.dart';
 class DBProvider {
   static Database? _database;
   static final DBProvider db = DBProvider._();
-
-  final String _gruposTable = 'Grupos';
-  final String _usuariosTable = 'Usuarios';
-  final String _grupoUsuarioTable = 'GrupoUsuario';
-  final String _justificacionesTable = 'Justificaciones';
 
   DBProvider._();
 
@@ -29,71 +23,51 @@ class DBProvider {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, 'justificaciones.db');
 
-    return await openDatabase(path, version: 2,
+    return await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute('PRAGMA foreign_keys = ON;');
 
       await db.execute('''
-          CREATE TABLE $_gruposTable(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT
-          );
-          
-          CREATE TABLE $_usuariosTable(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombres TEXT,
-            apellido_materno TEXT,
-            apellido_paterno TEXT,
-            email TEXT,
-            password TEXT,
-            role TEXT,
-            numero_control INTERGER NULL,
-            carrera TEXT NULL,
-            semestre TEXT NULL
-          );
-          
-          CREATE TABLE $_grupoUsuarioTable(
-              id INTEGER PRIMARY KEY AUTOINCREMENT,
-              FOREING KEY (usuario_id) REFERENCES $_usuariosTable(id),
-              FOREING KEY (grupo_id) REFERENCES $_gruposTable(id),
-          );
-
-          CREATE TABLE $_justificacionesTable(
-              id INTEGER PRIMARY KEY AUTOINCREMENT,
-              nombre TEXT,
-              fecha_inicio TEXT,
-              fecha_fin TEXT,
-              motivo TEXT,
-              FOREING KEY (profesor_id) REFERENCES $_usuariosTable(id),
-              FOREING KEY (alumno_id) REFERENCES $_usuariosTable(id),
-          );
+        CREATE TABLE storage (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          key TEXT UNIQUE,
+          value TEXT
+        )
       ''');
     });
   }
 
-  Future<int> nuevoGrupo() async {
-    final grupo = GrupoModel(id: 1, nombre: 'GRUPO1');
-
+  Future<bool> setStorage(String key, String value) async {
     final db = await database;
 
-    final grupoMap = grupo.toJson();
-    grupoMap.remove('id');
+    final storageExistente = await getStorage(key);
 
-    final res = await db!.insert(_gruposTable, grupoMap);
+    if(storageExistente != null) {
+      return true;
+    }
 
-    return res;
+    final id = await db!.insert('storage', {'key': key, 'value': value});
+
+    return id > 0;
   }
 
-  Future<int> nuevoUser(UserModel user) async {
+  Future<StorageModel?> getStorage(String key) async {
     final db = await database;
-    
-    final userMap = user.toJson();
-    userMap.remove('id');
+    final List<Map<String, dynamic>> registros = await db!.query(
+      'storage', 
+      where: 'key = ?',
+      whereArgs: [key],
+      limit: 1
+    );
 
-    final res = await db!.insert(_usuariosTable, userMap);
-
-    return res;
+    return registros.isEmpty ? null : StorageModel.fromJson(registros.first);
   }
 
+  Future<bool> deleteStorage(String key) async {
+    final db = await database;
+    final registrosAfectados = await db!.delete('storage', where: 'key = ?', whereArgs: [key]);
+
+    return registrosAfectados > 0;
+  }
 
 }

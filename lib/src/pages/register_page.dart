@@ -51,9 +51,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   Text('Datos personales', style: textGraySmall(),),
                   const SizedBox(height: 20.0,),
                   TextFormField(
-                    decoration: inputWithBorder('Nombres'),
-                    initialValue: registerFormProvider.user.nombres,
-                    onChanged: ( value ) => user.nombres = value,
+                    decoration: inputWithBorder('Nombre'),
+                    onChanged: ( value ) => user['nombre'] = value,
                     validator: ( value ) {
                       if( value == null || value.isEmpty) {
                         return 'Este campo es obligatorio';
@@ -64,8 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 20.0,),
                   TextFormField(
                     decoration: inputWithBorder('Apellido Paterno'),
-                    initialValue: registerFormProvider.user.nombres,
-                    onChanged: ( value ) => user.nombres = value,
+                    onChanged: ( value ) => user['apellido_paterno'] = value,
                     validator: ( value ) {
                       if( value == null || value.isEmpty) {
                         return 'Este campo es obligatorio';
@@ -76,8 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 20.0,),
                   TextFormField(
                     decoration: inputWithBorder('Apellido Materno'),
-                    initialValue: registerFormProvider.user.nombres,
-                    onChanged: ( value ) => user.nombres = value,
+                    onChanged: ( value ) => user['apellido_materno'] = value,
                     validator: ( value ) {
                       if( value == null || value.isEmpty) {
                         return 'Este campo es obligatorio';
@@ -89,36 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   if(uiProvider.isVisibleInpustRegister)
                   TextFormField(
                     decoration: inputWithBorder('Número de control'),
-                    initialValue: registerFormProvider.user.nombres,
-                    onChanged: ( value ) => user.nombres = value,
-                    validator: ( value ) {
-                      if( value == null || value.isEmpty) {
-                        return 'Este campo es obligatorio';
-                      }
-                      return null;
-                    },
-                  ),
-                  if(uiProvider.isVisibleInpustRegister)
-                  const SizedBox(height: 20.0,),
-                  if(uiProvider.isVisibleInpustRegister)
-                  TextFormField(
-                    decoration: inputWithBorder('Carrera'),
-                    initialValue: registerFormProvider.user.nombres,
-                    onChanged: ( value ) => user.nombres = value,
-                    validator: ( value ) {
-                      if( value == null || value.isEmpty) {
-                        return 'Este campo es obligatorio';
-                      }
-                      return null;
-                    },
-                  ),
-                  if(uiProvider.isVisibleInpustRegister)
-                  const SizedBox(height: 20.0,),
-                  if(uiProvider.isVisibleInpustRegister)
-                  TextFormField(
-                    decoration: inputWithBorder('Semestre'),
-                    initialValue: registerFormProvider.user.nombres,
-                    onChanged: ( value ) => user.nombres = value,
+                    onChanged: ( value ) => user['numero_control'] = value,
                     validator: ( value ) {
                       if( value == null || value.isEmpty) {
                         return 'Este campo es obligatorio';

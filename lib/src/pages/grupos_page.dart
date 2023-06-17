@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:justificacion_app/src/services/justificaciones_service.dart';
-
+import 'package:justificacion_app/src/services/cuentas_service.dart';
 import 'package:provider/provider.dart';
 
-import 'package:justificacion_app/src/services/cuentas_service.dart';
-import 'package:justificacion_app/src/provider/user_data_provider.dart';
+import '../provider/user_data_provider.dart';
 
-
-class JustificacionesPage extends StatelessWidget {
-  const JustificacionesPage({
+class GruposPage extends StatelessWidget {
+  const GruposPage({
     super.key,
   });
 
@@ -16,7 +13,6 @@ class JustificacionesPage extends StatelessWidget {
   Widget build(BuildContext context){
     final cuentasService = Provider.of<CuentasService>(context);
     final userDataProvider = Provider.of<UserDataProvider>(context);
-    final justificacionesService = Provider.of<JustificacionesService>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -32,7 +28,6 @@ class JustificacionesPage extends StatelessWidget {
             switch(value) {
               case 1:
                 await cuentasService.logout();
-                await userDataProvider.borrarDatosUsuario();
                 if(context.mounted) {
                   Navigator.pushNamed(context, 'login');
                 }
@@ -57,7 +52,7 @@ class JustificacionesPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    'Justificaciones',
+                    'Grupos',
                     style: TextStyle(fontSize: 36),
                   ),
                 ],
@@ -89,21 +84,10 @@ class JustificacionesPage extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: justificacionesService.justificaciones.length,
+              itemCount: 3,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(justificacionesService.justificaciones[index].identificador),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('id: ${justificacionesService.justificaciones[index].id}'),
-                      Text('Motivo: ${justificacionesService.justificaciones[index].motivo}'),
-                      if(userDataProvider.hasRole('alumno'))
-                        Text('Profesor: ${justificacionesService.justificaciones[index].profesor?.nombre} ${justificacionesService.justificaciones[index].profesor?.apellidoPaterno} ${justificacionesService.justificaciones[index].profesor?.apellidoMaterno}'),
-                      if(userDataProvider.hasRole('profesor'))
-                        Text('Alumno: ${justificacionesService.justificaciones[index].alumno?.nombre} ${justificacionesService.justificaciones[index].alumno?.apellidoPaterno} ${justificacionesService.justificaciones[index].alumno?.apellidoMaterno}'),
-                    ],
-                  ),
+                  title: Text('Justificación ${index + 1}'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

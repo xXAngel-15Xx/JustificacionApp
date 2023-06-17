@@ -1,64 +1,47 @@
-
 class UserModel {
-  int id;
-  String nombres;
-  String apellidoPaterno;
-  String apellidoMaterno;
-  String email;
-  String password;
-  String role;
-  String? numeroControl;
-  String? carrera;
-  String? semestre;
+    int id;
+    String nombre;
+    String apellidoPaterno;
+    String apellidoMaterno;
+    String? numeroControl;
+    String email;
+    dynamic emailVerifiedAt;
+    DateTime? createdAt;
+    DateTime? updatedAt;
 
-  UserModel({
-   required this.id,
-   required this.nombres,
-   required this.apellidoPaterno,
-   required this.apellidoMaterno,
-   required this.email,
-   required this.password,
-   required this.role,
-   this.semestre,
-   this.carrera,
-   this.numeroControl
-  });
+    UserModel({
+        required this.id,
+        required this.nombre,
+        required this.apellidoPaterno,
+        required this.apellidoMaterno,
+        this.numeroControl,
+        required this.email,
+        this.emailVerifiedAt,
+        this.createdAt,
+        this.updatedAt,
+    });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    id: json['id'],
-    nombres: json['nombres'],
-    apellidoPaterno: json['apellido_paterno'],
-    apellidoMaterno: json['apellido_materno'],
-    email: json['email'],
-    password: json['password'],
-    role: json['role'],
-    numeroControl: json['numero_control'],
-    carrera: json['carrera'],
-    semestre: json['semestre'] 
-  );
+    factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        id: json["id"],
+        nombre: json["nombre"],
+        apellidoPaterno: json["apellido_paterno"],
+        apellidoMaterno: json["apellido_materno"],
+        numeroControl: json["numero_control"],
+        email: json["email"],
+        emailVerifiedAt: json["email_verified_at"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["created_at"] == null ? null : DateTime.parse(json["updated_at"]),
+    );
 
-  Map<String, dynamic> toJson() => {
-    'id'    : id,
-    'nombres': nombres,
-    'apellido_paterno': apellidoPaterno,
-    'apellido_materno': apellidoMaterno,
-    'email': email,
-    'password': password,
-    'role': role,
-    'numeroControl': numeroControl,
-    'carrera': carrera,
-    'semestre': semestre 
-  };
-
-  Map<String, dynamic> tpJsonCreate() => {
-    'nombres': nombres,
-    'apellido_paterno': apellidoPaterno,
-    'apellido_materno': apellidoMaterno,
-    'email': email,
-    'password': password,
-    'role': role,
-    'numeroControl': numeroControl,
-    'carrera': carrera,
-    'semestre': semestre 
-  };
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "nombre": nombre,
+        "apellido_paterno": apellidoPaterno,
+        "apellido_materno": apellidoMaterno,
+        "numero_control": numeroControl,
+        "email": email,
+        "email_verified_at": emailVerifiedAt,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+    };
 }
