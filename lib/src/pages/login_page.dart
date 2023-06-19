@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:justificacion_app/src/models/credenciales_model.dart';
 import 'package:justificacion_app/src/provider/user_data_provider.dart';
 import 'package:justificacion_app/src/services/cuentas_service.dart';
@@ -25,7 +26,8 @@ class _LoginPageState extends State<LoginPage> {
 
     if(userDataProvider.userData.isEmpty) return;
 
-    final tokenExpirationDate = DateTime.parse(userDataProvider.tokenExpirationDate);
+    final DateFormat format = DateFormat("yyyy-MM-ddTHH:mm:ssZ");
+    final tokenExpirationDate = format.parse(userDataProvider.tokenExpirationDate);
     final today = DateTime.now();
     final difference = today.difference(tokenExpirationDate);
 
@@ -46,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    GlobalKey<FormState> formKeyLogin = GlobalKey<FormState>();
     final cuentasService = Provider.of<CuentasService>(context);
     final userDataProvider = Provider.of<UserDataProvider>(context);
 
@@ -61,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
       // ),
       body: Form(
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        key: formKey,
+        key: formKeyLogin,
         child: SingleChildScrollView(
           child: SafeArea(
             child: Padding(
@@ -130,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                   ElevatedButton(
                     onPressed: () async {
                       // Validar el formulario
-                      if(formKey.currentState?.validate() ?? false) {
+                      if(formKeyLogin.currentState?.validate() ?? false) {
                         final response = await cuentasService.login(credenciales);
                         if(context.mounted) {
                           await userDataProvider.cargarData();
@@ -145,10 +147,12 @@ class _LoginPageState extends State<LoginPage> {
                               showDialog(context: context, builder: ( _ ) => AlertDialogCustom(title: '¡Correcto!', message: response.message));
                             }
                           } else {
-                            showDialog(
-                              context: context, 
-                              builder: ( _ ) => AlertDialogCustom(title: '¡Error!', message: response.message)
-                            );
+                            if(context.mounted) {
+                              showDialog(
+                                context: context, 
+                                builder: ( _ ) => AlertDialogCustom(title: '¡Error!', message: response.message)
+                              );
+                            }
                           }
                         }
                       }

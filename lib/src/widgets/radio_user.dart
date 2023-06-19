@@ -29,10 +29,10 @@ class _RadioButtonsUserState extends State<RadioButtonsUser> {
             title: Text(label),
             leading: Radio<TypeUser>(
               value: user,
-              groupValue: registerFormProvider.userSelected,
+              groupValue: registerFormProvider.typeUserSelected,
               onChanged: (TypeUser? value) {
                 setState(() {
-                  registerFormProvider.userSelected = value ?? TypeUser.alumno;
+                  registerFormProvider.changeUserSelected(value);
                 });
               },
             ),

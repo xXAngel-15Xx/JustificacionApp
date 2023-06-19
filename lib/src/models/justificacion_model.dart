@@ -9,8 +9,8 @@ class JustificacionModel {
     String motivo;
     int profesorId;
     int alumnoId;
-    DateTime createdAt;
-    DateTime updatedAt;
+    DateTime? createdAt;
+    DateTime? updatedAt;
     UserModel? profesor;
     UserModel? alumno;
 
@@ -22,8 +22,8 @@ class JustificacionModel {
         required this.motivo,
         required this.profesorId,
         required this.alumnoId,
-        required this.createdAt,
-        required this.updatedAt,
+        this.createdAt,
+        this.updatedAt,
         this.profesor,
         this.alumno
     });
@@ -50,8 +50,8 @@ class JustificacionModel {
         "motivo": motivo,
         "profesor_id": profesorId,
         "alumno_id": alumnoId,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
         "profesor": profesor?.toJson(),
         "alumno": alumno?.toJson()
     };

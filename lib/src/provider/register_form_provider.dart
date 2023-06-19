@@ -11,6 +11,7 @@ class RegisterFormProvider extends ChangeNotifier {
     'apellido_paterno' : '',
     'apellido_materno' : '',
     'email'            : '',
+    'password'         : '',
     'numero_control'   : ''
   };
 
@@ -18,7 +19,17 @@ class RegisterFormProvider extends ChangeNotifier {
 
   List<int> gruposIdsSeleccionados = [];
 
-  TypeUser userSelected = TypeUser.alumno;
+  TypeUser typeUserSelected = TypeUser.alumno;
+
+  void changeUserSelected(TypeUser? newTypeUserSelected) {
+    typeUserSelected = newTypeUserSelected ?? TypeUser.alumno;
+    notifyListeners();
+  }
+
+  void changeGrupoSelected(int? newIdGrupoSelected) async {
+    grupoIdSeleccionado = newIdGrupoSelected ?? 0;
+    notifyListeners();
+  }
 
   bool isValidForm() {
     return formKey.currentState?.validate() ?? false;

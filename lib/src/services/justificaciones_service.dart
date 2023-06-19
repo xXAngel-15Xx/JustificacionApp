@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../models/response_helper.dart';
 import '../provider/db_provider.dart';
 import 'package:justificacion_app/src/models/justificacion_model.dart';
 
@@ -22,6 +23,8 @@ class JustificacionesService extends ChangeNotifier {
     final db = DBProvider.db;
     final tokenStorage = await db.getStorage('token');
 
+    justificaciones = [];
+
     final resp = await http.get(url, headers: {
       'Authorization': 'Bearer ${tokenStorage?.value}'
     });
@@ -34,5 +37,78 @@ class JustificacionesService extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  Future<JustificacionModel?> obtenerPorId(int id) async {
+    final url = Uri.parse("$urlBase/api/justificaciones/$id");
+    final db = DBProvider.db;
+    final tokenStorage = await db.getStorage('token');
+
+    if(tokenStorage == null) return null;
+
+    final resp = await http.get(url, headers: {
+      'Authorization': 'Bearer ${tokenStorage.value}'
+    });
+
+    final Map<String, dynamic> decodedData = json.decode(resp.body);
+
+    return JustificacionModel.fromJson(decodedData);
+  }
+
+  Future<ResponseHelper> crear(JustificacionModel justificacion) async {
+    final url = Uri.parse("$urlBase/api/justificaciones");
+    final db = DBProvider.db;
+    final tokenStorage = await db.getStorage('token');
+
+    if(tokenStorage == null) return ResponseHelper(success: false, message: 'Ocurrio un error');
+
+    final resp = await http.post(url, 
+      body: json.encode(justificacion.toJson()),
+      headers: {
+        'Authorization': 'Bearer ${tokenStorage.value}',
+        'Content-Type': 'application/json'
+      }
+    );
+
+    final Map<String, dynamic> decodedData = json.decode(resp.body);
+
+    return ResponseHelper.fromJson(decodedData);
+  }
+
+  Future<ResponseHelper> actualizar(int id, JustificacionModel grupo) async {
+    final url = Uri.parse("$urlBase/api/justificaciones/$id");
+    final db = DBProvider.db;
+    final tokenStorage = await db.getStorage('token');
+
+    if(tokenStorage == null) return ResponseHelper(success: false, message: 'Ocurrio un error');
+
+    final resp = await http.put(url, 
+      body: grupo.toJson(),
+      headers: {
+        'Authorization': 'Bearer ${tokenStorage.value}'
+      }
+    );
+
+    final Map<String, dynamic> decodedData = json.decode(resp.body);
+
+    return ResponseHelper.fromJson(decodedData);
+  }
+  
+  Future<ResponseHelper> eliminar(int id) async {
+    final url = Uri.parse("$urlBase/api/justificaciones/$id");
+    final db = DBProvider.db;
+    final tokenStorage = await db.getStorage('token');
+
+    if(tokenStorage == null) return ResponseHelper(success: false, message: 'Ocurrio un error');
+
+    final resp = await http.delete(url, 
+      headers: {
+        'Authorization': 'Bearer ${tokenStorage.value}'
+      }
+    );
+
+    final Map<String, dynamic> decodedData = json.decode(resp.body);
+
+    return ResponseHelper.fromJson(decodedData);
   }
 }

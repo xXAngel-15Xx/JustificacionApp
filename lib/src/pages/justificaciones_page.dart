@@ -83,6 +83,7 @@ class JustificacionesPage extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.add),
                   onPressed: () {
+                    Navigator.pushNamed(context, 'justificaciones-form');
                   },
                 ),
               ],
