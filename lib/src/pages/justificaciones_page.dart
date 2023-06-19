@@ -7,11 +7,22 @@ import 'package:justificacion_app/src/services/cuentas_service.dart';
 import 'package:justificacion_app/src/provider/user_data_provider.dart';
 
 
-class JustificacionesPage extends StatelessWidget {
+class JustificacionesPage extends StatefulWidget {
   const JustificacionesPage({
     super.key,
   });
 
+  @override
+  State<JustificacionesPage> createState() => _JustificacionesPageState();
+}
+
+class _JustificacionesPageState extends State<JustificacionesPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<JustificacionesService>(context, listen: false).cargarJustificaciones(context);
+  }
 
   @override
   Widget build(BuildContext context){
@@ -34,6 +45,7 @@ class JustificacionesPage extends StatelessWidget {
               case 1:
                 await cuentasService.logout();
                 await userDataProvider.borrarDatosUsuario();
+                justificacionesService.vaciarJustificaciones();
                 if(context.mounted) {
                   Navigator.pushNamed(context, 'login');
                 }
@@ -109,6 +121,7 @@ class JustificacionesPage extends StatelessWidget {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      
                       IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: () {

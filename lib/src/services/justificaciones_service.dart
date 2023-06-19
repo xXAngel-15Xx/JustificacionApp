@@ -13,17 +13,19 @@ class JustificacionesService extends ChangeNotifier {
 
   List<JustificacionModel> justificaciones = [];
 
-  JustificacionesService(){
-    cargarJustificaciones();
-  }
+  bool isLoading = true;
+
+  JustificacionesService();
 
 
-  Future<void> cargarJustificaciones() async {
+  cargarJustificaciones(BuildContext context) async {
     final url = Uri.parse("$urlBase/api/justificaciones");
     final db = DBProvider.db;
     final tokenStorage = await db.getStorage('token');
 
     justificaciones = [];
+
+    isLoading = true;
 
     final resp = await http.get(url, headers: {
       'Authorization': 'Bearer ${tokenStorage?.value}'
@@ -36,6 +38,13 @@ class JustificacionesService extends ChangeNotifier {
       justificaciones.add(tempJustificacion);
     }
 
+    isLoading = false;
+
+    notifyListeners();
+  }
+
+  void vaciarJustificaciones() {
+    justificaciones.clear();
     notifyListeners();
   }
 

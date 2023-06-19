@@ -212,7 +212,9 @@ class _JustificacionFormPageState extends State<JustificacionesFormPage> {
       if(justificacionesFormProvider.isValidForm()) {
         final response = await justificacionesService.crear(justificacionesFormProvider.justificacion);
         if(response.success) {
-          justificacionesService.cargarJustificaciones();
+          if(context.mounted) {
+            justificacionesService.cargarJustificaciones(context);
+          }
           if(context.mounted) {
             Navigator.pop(context);
             showDialog(context: context, builder: ( _ ) => AlertDialogCustom(title: '!Correcto!', message: response.message));
