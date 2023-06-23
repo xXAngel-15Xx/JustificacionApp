@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:justificacion_app/src/models/grupo_model.dart';
 import 'package:justificacion_app/src/provider/register_form_provider.dart';
 import 'package:justificacion_app/src/services/cuentas_service.dart';
 import 'package:justificacion_app/src/services/grupos_service.dart';
 import 'package:justificacion_app/src/widgets/alert_dialog_custom.dart';
 import 'package:justificacion_app/src/widgets/radio_user.dart';
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +24,8 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     final registerFormProvider = Provider.of<RegisterFormProvider>(context);
     final gruposService = Provider.of<GruposService>(context);
-    final cuentasService = Provider.of<CuentasService>(context);
+    final cuentasService = Provider.of<CuentasService>(context, listen: false);
+    
 
     final user = registerFormProvider.user;
 

@@ -7,37 +7,51 @@ import 'package:intl/intl.dart';
 
 import 'package:justificacion_app/src/models/credenciales_model.dart';
 import 'package:justificacion_app/src/models/response_helper.dart';
-import 'package:justificacion_app/src/models/user_model.dart';
 import 'package:justificacion_app/src/provider/db_provider.dart';
+import 'package:justificacion_app/src/services/storage_service.dart';
+import 'package:justificacion_app/src/utils/sistema.dart';
 
 
 class CuentasService extends ChangeNotifier {
-  final String urlBase = 'http://192.168.1.10:8080/justificaciones-backend/public';
+
+  bool isLoading = false;
 
   Future<ResponseHelper> login(CredencialesModel credencialesUsuario) async {
-    final url = Uri.parse("$urlBase/api/cuentas/login");
-    final db = DBProvider.db;
+    final url = Uri.parse("${Sistema.urlBase}/api/cuentas/login");
+    final storageService = StorageService.getInstace();
+    ResponseHelper response;
 
-    final resp = await http.post(url, body: credencialesUsuario.toJson());
+    isLoading = true;
+    notifyListeners();
 
-    final Map<String, dynamic> decodedData = json.decode(resp.body);
+    try {
+      final resp = await http.post(url, body: json.encode(credencialesUsuario.toJson()), headers: {
+        'Content-Type': 'application/json'
+      });
 
-    if(decodedData['success']) {
-      if(decodedData.containsKey('token')) {
-        await db.setStorage('token', decodedData['token']);
-        await db.setStorage('token_expiration_date', decodedData['expires_at']);
-        decodedData.remove('token');
+      final Map<String, dynamic> decodedData = json.decode(resp.body);
+
+      if(resp.statusCode == 200) {
+        await storageService.deleteTokenStorage();
+        await storageService.setTokenStorage(json.encode({
+          'token': decodedData['token'],
+           'expires_at': decodedData['expires_at']
+        })); 
+        await storageService.deleteUserDataStorage();
+        await storageService.setUserDataStore(json.encode(decodedData['helper_data']));
+        await storageService.cargarStorages();
       }
-      if(decodedData.containsKey('helper_data')) {
-        await db.setStorage('user_data', json.encode(decodedData['helper_data']));
-      }
+      response = ResponseHelper.fromJson(decodedData);
+    } catch (e) {
+      response = ResponseHelper(success: false, message: 'Ocurrio un error inesperado, vuelva más tarde.');
     }
-    
-    return ResponseHelper.fromJson(decodedData);
+    isLoading = false;
+    notifyListeners();
+    return response;
   }
 
   Future<ResponseHelper> registrarAlumno(Map<String, String> alumno, int grupoId) async {
-    final url = Uri.parse("$urlBase/api/cuentas/register/alumno");
+    final url = Uri.parse("${Sistema.urlBase}/api/cuentas/register/alumno");
     alumno.addAll({'grupo_id': grupoId.toString()});
 
     final resp = await http.post(url, body: alumno);
@@ -70,7 +84,7 @@ class CuentasService extends ChangeNotifier {
   }
 
   Future<ResponseHelper> registerProfesor(Map<String, String> profesor, List<int> gruposIds) async {
-    final url = Uri.parse("$urlBase/api/cuentas/register/profesor");
+    final url = Uri.parse("${Sistema.urlBase}/api/cuentas/register/profesor");
     final Map<String, dynamic> profesorMap = {
       'grupos': gruposIds.toList(),
     };

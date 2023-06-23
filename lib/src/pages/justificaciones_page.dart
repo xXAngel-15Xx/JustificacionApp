@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:justificacion_app/src/services/justificaciones_service.dart';
+import 'package:justificacion_app/src/services/storage_service.dart';
 
 import 'package:provider/provider.dart';
 
 import 'package:justificacion_app/src/services/cuentas_service.dart';
-import 'package:justificacion_app/src/provider/user_data_provider.dart';
 
 
 class JustificacionesPage extends StatefulWidget {
@@ -27,8 +27,8 @@ class _JustificacionesPageState extends State<JustificacionesPage> {
   @override
   Widget build(BuildContext context){
     final cuentasService = Provider.of<CuentasService>(context);
-    final userDataProvider = Provider.of<UserDataProvider>(context);
     final justificacionesService = Provider.of<JustificacionesService>(context);
+    final storageService = StorageService.getInstace();
 
     return Scaffold(
       appBar: AppBar(
@@ -44,7 +44,7 @@ class _JustificacionesPageState extends State<JustificacionesPage> {
             switch(value) {
               case 1:
                 await cuentasService.logout();
-                await userDataProvider.borrarDatosUsuario();
+                await storageService.deleteStorages();
                 justificacionesService.vaciarJustificaciones();
                 if(context.mounted) {
                   Navigator.pushNamed(context, 'login');
@@ -65,7 +65,7 @@ class _JustificacionesPageState extends State<JustificacionesPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Bienvenido ${userDataProvider.fullName}',
+                    'Bienvenido ${storageService.getUserFullName()}',
                     style: const TextStyle(fontSize: 24),
                   ),
                   const SizedBox(height: 10),
@@ -112,9 +112,9 @@ class _JustificacionesPageState extends State<JustificacionesPage> {
                     children: [
                       Text('id: ${justificacionesService.justificaciones[index].id}'),
                       Text('Motivo: ${justificacionesService.justificaciones[index].motivo}'),
-                      if(userDataProvider.hasRole('alumno'))
+                      if(storageService.hasRole('alumno'))
                         Text('Profesor: ${justificacionesService.justificaciones[index].profesor?.nombre} ${justificacionesService.justificaciones[index].profesor?.apellidoPaterno} ${justificacionesService.justificaciones[index].profesor?.apellidoMaterno}'),
-                      if(userDataProvider.hasRole('profesor'))
+                      if(storageService.hasRole('profesor'))
                         Text('Alumno: ${justificacionesService.justificaciones[index].alumno?.nombre} ${justificacionesService.justificaciones[index].alumno?.apellidoPaterno} ${justificacionesService.justificaciones[index].alumno?.apellidoMaterno}'),
                     ],
                   ),

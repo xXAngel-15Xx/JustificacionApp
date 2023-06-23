@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:justificacion_app/src/services/cuentas_service.dart';
+import 'package:justificacion_app/src/services/storage_service.dart';
+import 'package:justificacion_app/src/widgets/alert_dialog_custom.dart';
 import 'package:provider/provider.dart';
-
-import '../provider/user_data_provider.dart';
 
 class GruposPage extends StatelessWidget {
   const GruposPage({
@@ -12,7 +12,7 @@ class GruposPage extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     final cuentasService = Provider.of<CuentasService>(context);
-    final userDataProvider = Provider.of<UserDataProvider>(context);
+    final storageService = StorageService.getInstace(); 
 
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +29,8 @@ class GruposPage extends StatelessWidget {
               case 1:
                 await cuentasService.logout();
                 if(context.mounted) {
-                  Navigator.pushNamed(context, 'login');
+                  Navigator.pop(context);
+                  showDialog(context: context, builder: ( _ ) => const AlertDialogCustom(title: '¡Adios!', message: 'Vuelve pronto :D'));
                 }
               break;
             }
@@ -47,7 +48,7 @@ class GruposPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Bienvenido ${userDataProvider.fullName}',
+                    'Bienvenido ${storageService.getUserFullName()}',
                     style: const TextStyle(fontSize: 24),
                   ),
                   const SizedBox(height: 10),
