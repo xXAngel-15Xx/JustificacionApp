@@ -8,7 +8,7 @@ class GruposModel {
     String aula;
     DateTime createdAt;
     DateTime updatedAt;
-    UserModel? users;
+    List<UserModel>? users;
 
     GruposModel({
         required this.id,
@@ -29,7 +29,7 @@ class GruposModel {
         aula: json["aula"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        users: json['users'] == null ? null : UserModel.fromJson(json['users'])
+        users: json['users'] == null ? null : List<UserModel>.from(json['users'].map((x) => UserModel.fromJson(x)))
     );
 
     Map<String, dynamic> toJson() => {
@@ -40,6 +40,6 @@ class GruposModel {
         "aula": aula,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "users": users?.toJson()
+        "users": users
     };
 }

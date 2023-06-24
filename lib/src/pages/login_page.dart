@@ -153,15 +153,18 @@ class _LoginPageState extends State<LoginPage> {
                           if(context.mounted) {
                             showDialog(context: context, builder: ( _ ) => AlertDialogCustom(title: '¡Error!', message: response.message,));
                           }
+                          return;
                         }
     
                         if(context.mounted) {
                           final storageService = StorageService.getInstace();
                           if(storageService.hasRole('alumno') || storageService.hasRole('profesor')) {
                             Navigator.pushNamed(context, 'home');
+                            return;
                           }
                           if(storageService.hasRole('administrador')) {
                             Navigator.pushNamed(context, 'grupos');
+                            return;
                           }
                           showDialog(context: context, builder: ( _ ) => const AlertDialogCustom(title: '¡Correcto!', message: 'Bienvenido de nuevo'));
                         }
