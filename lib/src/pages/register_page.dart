@@ -21,12 +21,23 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
 
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 1), () {
+      _initPage();
+    });
+  }
+
+  _initPage() async {
+    final gruposService = Provider.of<GruposService>(context, listen: false);
+    await gruposService.cargarGruposSinAuth();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final registerFormProvider = Provider.of<RegisterFormProvider>(context);
     final gruposService = Provider.of<GruposService>(context);
     final cuentasService = Provider.of<CuentasService>(context, listen: false);
-    
-
     final user = registerFormProvider.user;
 
     return Scaffold(
@@ -190,6 +201,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                           if(response.success) {
                             if(context.mounted) {
+                              gruposService.grupos.clear();
                               Navigator.pop(context);
                               showDialog(context: context, builder: ( _ ) => AlertDialogCustom(title: '!Correcto!', message: response.message,));
                             }

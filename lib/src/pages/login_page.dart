@@ -38,9 +38,9 @@ class _LoginPageState extends State<LoginPage> {
     final DateFormat format = DateFormat("yyyy-MM-ddTHH:mm:ssZ");
     final tokenExpirationDate = format.parse(storageService.tokenStorageDecoded['expires_at'] ?? '');
     final today = DateTime.now();
-    final difference = today.difference(tokenExpirationDate);
+    final difference = tokenExpirationDate.difference(today);
 
-    if(difference.inMinutes < 60) {
+    if(difference.inMinutes > 0) {
       if(context.mounted) {
         if(storageService.hasRole('alumno') || storageService.hasRole('profesor')) {
           Navigator.pushNamed(context, 'home');
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
         // appBar: AppBar(
         //   title: const Text('Inicio de Sesión'),
         // ),
-        body: isLoading ? const Center(child: Column(children: [CircularProgressIndicator(), Text('Iniciando Sesión')]),) : Form(
+        body: isLoading ? const Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator(), Text('Iniciando Sesión')]),) : Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           key: formKeyLogin,
           child: SingleChildScrollView(

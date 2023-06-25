@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:justificacion_app/src/pages/grupos_form_page.dart';
 import 'package:justificacion_app/src/pages/justificaciones_form_page.dart';
+import 'package:justificacion_app/src/pages/logout_page.dart';
 import 'package:justificacion_app/src/provider/justificaciones_form_provider.dart';
 import 'package:justificacion_app/src/services/users_service.dart';
 
@@ -50,12 +52,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Justificaciones App',
       routes: {
-        'home'                            : (context) => const JustificacionesPage(),
-        'grupos'                          : (context) => const GruposPage(),
         'login'                           : (context) => const LoginPage(),
+        'logout'                          : (context) => const LogoutPage(),
         'register'                        : (context) => const RegisterPage(),
         'forget-password'                 : (context) => const ForgetPasswordPage(),
+        'home'                            : (context) => const JustificacionesPage(),
         'justificaciones-form'            : (context) => const JustificacionesFormPage(),
+        'grupos'                          : (context) => const GruposPage(),
+        'grupos-form'                     : (context) => const GruposFormPage(),
       },
       initialRoute: 'login',
     );

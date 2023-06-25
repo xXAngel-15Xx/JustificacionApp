@@ -6,8 +6,8 @@ class GruposModel {
     String semestre;
     String carrera;
     String aula;
-    DateTime createdAt;
-    DateTime updatedAt;
+    DateTime? createdAt;
+    DateTime? updatedAt;
     List<UserModel>? users;
 
     GruposModel({
@@ -16,8 +16,8 @@ class GruposModel {
         required this.semestre,
         required this.carrera,
         required this.aula,
-        required this.createdAt,
-        required this.updatedAt,
+        this.createdAt,
+        this.updatedAt,
         this.users,
     });
 
@@ -38,8 +38,8 @@ class GruposModel {
         "semestre": semestre,
         "carrera": carrera,
         "aula": aula,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
         "users": users
     };
 }

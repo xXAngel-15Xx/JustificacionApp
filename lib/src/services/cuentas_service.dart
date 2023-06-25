@@ -125,11 +125,9 @@ class CuentasService extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    // await storege.delete(key: 'token');
-    final db = DBProvider.db;
-    await db.deleteStorage('token');
-    await db.deleteStorage('token_expiration_date');
-    await db.deleteStorage('user_data');
+    final storageService = StorageService.getInstace();
+
+    await storageService.deleteStorages();
   }
 
   Future<bool> isValidToken() async {

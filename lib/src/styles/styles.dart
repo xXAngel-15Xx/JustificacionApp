@@ -16,10 +16,33 @@ TextStyle hedding1() {
   );
 }
 
+TextStyle hedding2() {
+  return const TextStyle(
+    color: black,
+    fontSize: 36.0,
+    fontWeight: FontWeight.bold
+  );
+}
+
+TextStyle hedding3() {
+  return const TextStyle(
+    color: black,
+    fontSize: 24.0,
+    fontWeight: FontWeight.bold
+  );
+}
+
 TextStyle textGraySmall() {
   return const TextStyle(
     color: gray,
     fontSize: 12.0
+  );
+}
+
+TextStyle textGrayMedium() {
+  return const TextStyle(
+    color: gray,
+    fontSize: 18.0
   );
 }
 
