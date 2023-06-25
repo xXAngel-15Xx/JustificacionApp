@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import 'package:justificacion_app/src/services/cuentas_service.dart';
 
-
 class JustificacionesPage extends StatefulWidget {
   const JustificacionesPage({
     super.key,
@@ -21,11 +20,12 @@ class _JustificacionesPageState extends State<JustificacionesPage> {
   void initState() {
     super.initState();
 
-    Provider.of<JustificacionesService>(context, listen: false).cargarJustificaciones(context);
+    Provider.of<JustificacionesService>(context, listen: false)
+        .cargarJustificaciones(context);
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     final cuentasService = Provider.of<CuentasService>(context);
     final justificacionesService = Provider.of<JustificacionesService>(context);
     final storageService = StorageService.getInstace();
@@ -38,21 +38,24 @@ class _JustificacionesPageState extends State<JustificacionesPage> {
         actions: [
           PopupMenuButton<int>(
             itemBuilder: (context) => <PopupMenuEntry<int>>[
-            const PopupMenuItem(value: 1,child: Text('Cerrar Sesión'),)
-          ],
-          onSelected: (value) async {
-            switch(value) {
-              case 1:
-                await cuentasService.logout();
-                await storageService.deleteStorages();
-                justificacionesService.vaciarJustificaciones();
-                if(context.mounted) {
-                  Navigator.pushNamed(context, 'login');
-                }
-              break;
-            }
-          },
-        )
+              const PopupMenuItem(
+                value: 1,
+                child: Text('Cerrar Sesión'),
+              )
+            ],
+            onSelected: (value) async {
+              switch (value) {
+                case 1:
+                  await cuentasService.logout();
+                  await storageService.deleteStorages();
+                  justificacionesService.vaciarJustificaciones();
+                  if (context.mounted) {
+                    Navigator.pushNamed(context, 'login');
+                  }
+                  break;
+              }
+            },
+          ),
         ],
       ),
       body: Column(
@@ -106,31 +109,33 @@ class _JustificacionesPageState extends State<JustificacionesPage> {
               itemCount: justificacionesService.justificaciones.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(justificacionesService.justificaciones[index].identificador),
+                  title: Text(justificacionesService
+                      .justificaciones[index].identificador),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('id: ${justificacionesService.justificaciones[index].id}'),
-                      Text('Motivo: ${justificacionesService.justificaciones[index].motivo}'),
-                      if(storageService.hasRole('alumno'))
-                        Text('Profesor: ${justificacionesService.justificaciones[index].profesor?.nombre} ${justificacionesService.justificaciones[index].profesor?.apellidoPaterno} ${justificacionesService.justificaciones[index].profesor?.apellidoMaterno}'),
-                      if(storageService.hasRole('profesor'))
-                        Text('Alumno: ${justificacionesService.justificaciones[index].alumno?.nombre} ${justificacionesService.justificaciones[index].alumno?.apellidoPaterno} ${justificacionesService.justificaciones[index].alumno?.apellidoMaterno}'),
+                      Text(
+                          'id: ${justificacionesService.justificaciones[index].id}'),
+                      Text(
+                          'Motivo: ${justificacionesService.justificaciones[index].motivo}'),
+                      if (storageService.hasRole('alumno'))
+                        Text(
+                            'Profesor: ${justificacionesService.justificaciones[index].profesor?.nombre} ${justificacionesService.justificaciones[index].profesor?.apellidoPaterno} ${justificacionesService.justificaciones[index].profesor?.apellidoMaterno}'),
+                      if (storageService.hasRole('profesor'))
+                        Text(
+                            'Alumno: ${justificacionesService.justificaciones[index].alumno?.nombre} ${justificacionesService.justificaciones[index].alumno?.apellidoPaterno} ${justificacionesService.justificaciones[index].alumno?.apellidoMaterno}'),
                     ],
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      
                       IconButton(
                         icon: const Icon(Icons.delete),
-                        onPressed: () {
-                        },
+                        onPressed: () {},
                       ),
                       IconButton(
                         icon: const Icon(Icons.check),
-                        onPressed: () {
-                        },
+                        onPressed: () {},
                       ),
                     ],
                   ),
